@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :lists do
+    resources :tasks
+  end
   devise_for :users
   get '/dashboard', to: 'dashboard#index'
   root to: 'root#index'
