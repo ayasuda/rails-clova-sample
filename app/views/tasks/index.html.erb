@@ -7,7 +7,7 @@
     <tr>
       <th>Title</th>
       <th>Completed at</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
@@ -16,6 +16,7 @@
       <tr>
         <td><%= task.title %></td>
         <td><%= task.completed_at %></td>
+        <td><%= button_to 'Complete', complete_list_task_path(@list, task), method: :patch if task.completed_at.nil? %></td>
         <td><%= link_to 'Show', [@list, task] %></td>
         <td><%= link_to 'Edit', edit_list_task_path(@list, task) %></td>
         <td><%= button_to 'Destroy', [@list, task], method: :delete, data: { confirm: 'Are you sure?' } %></td>

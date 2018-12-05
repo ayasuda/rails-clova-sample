@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   resources :lists do
-    resources :tasks
+    resources :tasks do
+      patch 'complete', on: :member
+      put 'complete', on: :member
+    end
   end
   devise_for :users
   get '/dashboard', to: 'dashboard#index'

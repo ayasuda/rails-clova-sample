@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_list
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :complete, :destroy]
 
   # GET /tasks
   # GET /tasks.json
@@ -48,6 +48,20 @@ class TasksController < ApplicationController
       else
         format.html { render :edit }
         format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /tasks/1/complete
+  # PATCH/PUT /tasks/1/complete.json
+  def complete
+    respond_to do |format|
+      if @task.complete
+        format.html { redirect_to list_tasks_url(@list), notice: 'Task was successfully completed.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to list_tasks_url(@list), alert: 'Task was not completed.' }
+        format.json { head :no_content }
       end
     end
   end
