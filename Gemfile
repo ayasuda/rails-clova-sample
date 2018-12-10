@@ -7,6 +7,8 @@ gem 'bootsnap', '>= 1.1.0', require: false # Boot large ruby/rails apps faster
 gem 'devise' # Flexible authentication solution for Rails with Warden
 gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'mysql2', '>= 0.4.4', '< 0.6.0' # Use mysql as the database for Active Record
+gem 'omniauth' # A generalized Rack framework for multiple-provider authentication.
+gem 'omniauth-line' # OmniAuth strategy for Line
 gem 'puma', '~> 3.11' # Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for Ruby/Rack applications. Puma is intended for use in both development and production environments. It's great for highly concurrent Ruby implementations such as Rubinius and JRuby as well as as providing process worker support to support CRuby well.
 gem 'rails', '~> 5.2.2' # Ruby on Rails is a full-stack web framework optimized for programmer happiness and sustainable productivity. It encourages beautiful code by favoring convention over configuration.
 

@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_28_125407) do
+ActiveRecord::Schema.define(version: 2018_12_10_062603) do
+
+  create_table "credentials", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "social_provider_id"
+    t.boolean "expires"
+    t.datetime "expired_at"
+    t.text "refresh_token"
+    t.text "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["social_provider_id"], name: "index_credentials_on_social_provider_id"
+  end
 
   create_table "lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -18,6 +29,16 @@ ActiveRecord::Schema.define(version: 2018_11_28_125407) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_lists_on_user_id"
+  end
+
+  create_table "social_providers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "provider"
+    t.string "uid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider", "uid"], name: "index_social_providers_on_provider_and_uid", unique: true
+    t.index ["user_id"], name: "index_social_providers_on_user_id"
   end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -41,5 +62,7 @@ ActiveRecord::Schema.define(version: 2018_11_28_125407) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "credentials", "social_providers"
+  add_foreign_key "social_providers", "users"
   add_foreign_key "tasks", "lists"
 end
