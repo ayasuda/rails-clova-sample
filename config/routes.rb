@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post '/clova', to: 'clova#index'
   resources :lists do
     resources :tasks do
       patch 'complete', on: :member

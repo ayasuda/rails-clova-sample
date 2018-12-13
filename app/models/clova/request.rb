@@ -1,6 +1,11 @@
+require 'forwardable'
+
 module  Clova
   class Request
+    extend ::Forwardable
     attr_accessor :context, :request, :session, :version
+
+    def_delegators :@request, :event?, :intent?, :launch?, :session_ended?, :name, :slots, :payload
 
     class Context
       attr_accessor :audio_player, :system
@@ -112,6 +117,38 @@ module  Clova
         self.timestamp = json&.[]("timestamp")
         self.event = Event.new(json&.[]("event"))
         self.intent = Intent.new(json&.[]("intent"))
+      end
+
+      def event?
+        self.type == "EventRequest"
+      end
+
+      def intent?
+        self.type == "IntentRequest"
+      end
+
+      def launch?
+        self.type == "LaunchRequest"
+      end
+
+      def session_ended?
+        self.type == "SessionEndedRequest"
+      end
+
+      def name
+        case
+        when event? then "#{self.event.namespace}.#{self.event.name}"
+        when intent? then self.intent&.name
+        else ""
+        end
+      end
+
+      def slots
+        self.intent&.slots
+      end
+
+      def payload
+        self.event&.payload
       end
     end # Request
 
