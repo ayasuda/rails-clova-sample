@@ -54,5 +54,10 @@ JSON
     req = Clova::Request.parse_request_from(raw)
     assert_equal("1.0", req.version)
     assert_equal("OrderPizza", req.request.intent.name)
+    assert req.intent?
+    assert_equal("OrderPizza", req.name)
+
+    req = Clova::Request.parse_request_from("{}")
+    assert_equal("", req.name)
   end
 end
