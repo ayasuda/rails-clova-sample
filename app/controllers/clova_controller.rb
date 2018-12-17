@@ -20,7 +20,10 @@ class ClovaController < ApplicationController
     when clova_request.intent?
       case clova_request.name
       when "ReadListsIntent"
-        render json: say("本日は晴天なり #{current_user.email} さんようこそ")
+        message = "本日は晴天なり #{current_user.email} さんようこそ"
+        client = LineBot.new
+        client.push_message(clova_request.user_id, type: :text, text: message)
+        render json: say(message)
       else
         render json: empty
       end
