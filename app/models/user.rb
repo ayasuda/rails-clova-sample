@@ -8,6 +8,12 @@ class User < ApplicationRecord
 
   has_many :social_providers, dependent: :destroy
 
+  has_many :access_grants, class_name: "Doorkeeper::AccessGrant",
+    foreign_key: :resource_owner_id, dependent: :delete_all # or :destroy if you need callbacks
+
+  has_many :access_tokens, class_name: "Doorkeeper::AccessToken",
+    foreign_key: :resource_owner_id, dependent: :delete_all # or :destroy if you need callbacks
+
   after_create :create_default_list
 
   def self.from_line(auth)
@@ -28,6 +34,10 @@ class User < ApplicationRecord
     end
 
     user
+  end
+
+  def admin?
+    id == 2
   end
 
   private

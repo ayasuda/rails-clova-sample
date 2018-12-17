@@ -6,9 +6,13 @@ module  Clova
     attr_accessor :context, :request, :session, :version
 
     def_delegators :@request, :event?, :intent?, :launch?, :session_ended?, :name, :slots, :payload
+    def_delegators :@context, :access_token
 
     class Context
+      extend ::Forwardable
       attr_accessor :audio_player, :system
+
+      def_delegators :@system, :access_token
 
       class AudioPlayer
         attr_accessor :offset_in_milliseconds, :player_activity, :stream, :total_in_milliseconds
@@ -22,7 +26,10 @@ module  Clova
       end # AudioPlayer
 
       class System
+        extend ::Forwardable
         attr_accessor :application, :device, :user
+
+        def_delegators :@user, :access_token
 
         class Application
           attr_accessor :application_id
@@ -80,6 +87,9 @@ module  Clova
       def initialize(json)
         self.audio_player = AudioPlayer.new(json&.[]("audioPlayer"))
         self.system = System.new(json&.[]("System"))
+      end
+
+      def token
       end
     end # Context
 

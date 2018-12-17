@@ -5,6 +5,7 @@ ruby '2.4.2'
 
 gem 'bootsnap', '>= 1.1.0', require: false # Boot large ruby/rails apps faster
 gem 'devise' # Flexible authentication solution for Rails with Warden
+gem 'doorkeeper' # Doorkeeper is an OAuth 2 provider for Rails and Grape.
 gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'mysql2', '>= 0.4.4', '< 0.6.0' # Use mysql as the database for Active Record
 gem 'omniauth' # A generalized Rack framework for multiple-provider authentication.

@@ -4,11 +4,23 @@ class ClovaController < ApplicationController
 
   def index
     clova_request = Clova::Request.parse_request_from(request.body.read)
+    token = Doorkeeper::AccessToken.by_token(clova_request.access_token)
+
+    return render json: say("アカウント連携してください") if token.nil?
+
+    return render status: :forbidden, text: "access denied" unless token.accessible? # expired or revoked
+
+    begin
+      current_user = User.find(token.resource_owner_id)
+    rescue ActiveRecord::RecordNotFound
+      return render json: say("アカウント連携してください")
+    end
+
     case
     when clova_request.intent?
       case clova_request.name
       when "ReadListsIntent"
-        render json: say("本日は晴天なり")
+        render json: say("本日は晴天なり #{current_user.email} さんようこそ")
       else
         render json: empty
       end
