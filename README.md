@@ -1,6 +1,7 @@
 # Rails x Clova スキルサンプル
 
 Ruby on Rails で [Clova スキル](https://clova-developers.line.biz/#/) を開発するサンプルコードです。
+コードの詳細な内容などは [Ruby on Rails で作る！ Clova スキル 〜LINE 連携もあるよ〜](https://engineering.linecorp.com/ja/blog/clova-ruby-on-rails/) にまとめられておりますので、ご一読いただければ幸いです。
 
 ## Install
 
